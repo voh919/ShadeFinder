@@ -1,5 +1,3 @@
-@import url('base.css');
-
 /*=============== HEADER & NAV ===============*/
 .header{
     position: sticky;
@@ -154,4 +152,3 @@
         border-bottom: 3px solid transparent;
     }
 }
-

@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- Created by hollow1vei -->
 <html lang="en">
 
     <head>
@@ -14,7 +13,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.4.0/fonts/remixicon.css">
 
         <!--=============== CSS ===============-->
-        <link rel="stylesheet" href="assets/css/nav.css">
+        <link rel="stylesheet" href="assets/css/base.css">
 
         <!--=============== PAGE TITLE ===============-->
         <title> Shade Finder </title>
@@ -22,63 +21,87 @@
 
     <body>
 
-        <header class="header" id="header">
-            <nav class="nav container wrapper">
+        <main class="main">
+            <section class="container wrapper picker-section" id="picker">
+                <div class="upload-area">
+                    <h1>Image Color Picker</h1>
+                    <p style="margin: 1rem 0; color: var(--vshojo-light-gray);">Upload an image and hover over it to extract colors</p>
+                    <input type="file" id="imageInput" class="file-input" accept="image/*">
+                    <label for="imageInput" class="upload-button">
+                        <i class="ri-upload-cloud-line" style="margin-right: 0.5rem;"></i>
+                        Choose Image
+                    </label>
+                </div>
 
-                <a href="#" class="nav-logo">
-                    <img src="assets/img/logo/pngtree-colorful-explosion-splash-isolated-png-image_13165857.png" class="nav-img">
-                    <p>Shade Finder</p>
-                </a>
+                <div class="picker-container" id="pickerContainer" style="display: none;">
+                    <div class="canvas-container">
+                        <canvas id="imageCanvas"></canvas>
+                    </div>
+                    
+                    <div class="color-info">
+                        <button id="chooseNewColorBtn" class="choose-new-color-btn">Choose New Color</button>
+                        <div class="selected-color-display" id="selectedColorDisplay">
+                            <h3 style="margin-bottom: 1rem; color: var(--vshojo-dark-gray);">Selected Color</h3>
+                            <div class="selected-color-preview" id="selectedColorPreview"></div>
+                            <p style="font-size: 0.9rem; color: var(--vshojo-light-gray); text-align: center;" id="selectedColorText"></p>
+                        </div>
 
-                <div class="nav-menu" id="nav_menu">
-                    <ul class="nav-list">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <p class="">
-                                    temp
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <p class="">
-                                    temp
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- Close button-->
-                    <div class="nav-close" id="nav_close">
-                        <i class="ri-close-large-line"></i>
+                        <div class="color-preview" id="colorPreview" title="Click to select this color"></div>
+
+                        <div class="color-values">
+                            <div class="color-value">
+                                <span class="color-label">HEX</span>
+                                <span class="color-code" id="hexValue" title="Click to copy">#000000</span>
+                            </div>
+                            <div class="color-value">
+                                <span class="color-label">RGB</span>
+                                <span class="color-code" id="rgbValue" title="Click to copy">rgb (0, 0, 0)</span>
+                            </div>
+                            <div class="color-value">
+                                <span class="color-label">HSL</span>
+                                <span class="color-code" id="hslValue" title="Click to copy">hsl (0, 0%, 0%)</span>
+                            </div>
+                        </div>
+                        
+                        <button class="match-products-btn" id="matchProductsBtn">
+                            <span>Product Matches</span>
+                            <i class="ri-arrow-right-line"></i>
+                        </button>
+                        
+                        <div class="coordinates" id="coordinates">
+                            Position: (0, 0)
+                        </div>
                     </div>
                 </div>
-                <!-- Toggle button-->
-                <div class="nav-toggle" id="nav_toggle">
-                    <i class="ri-menu-line"></i>
-                </div>
-            </nav>
-        </header>
 
-        <main class="main">
-            <section class="container" id="">
-                
+                <div class="instructions" id="instructions">
+                    <p><i class="ri-information-line" style="margin-right: 0.5rem;"></i>
+                    Upload an image to start. Hover over any part of the image and click "Select This Color" to proceed to product matching.</p>
+                </div>
             </section>
-            <section class="container" id="">
-                
-            </section>
-            <section class="container" id="">
-                
-            </section>
-            <section class="container" id="">
-                
+
+            <section class="container wrapper matches-section" id="matches">
+                <div class="matches-header">
+                    <a href="#picker" class="back-to-picker">
+                        <i class="ri-arrow-left-line"></i>
+                        Back to Color Picker
+                    </a>
+                    <h1>Product Matches</h1>
+                    <div class="selected-color-info" id="matchesColorInfo">
+                        <div class="selected-color-circle" id="matchesColorCircle"></div>
+                        <div>
+                            <p style="font-weight: var(--font-semibold); color: var(--vshojo-dark-gray);">Selected Color</p>
+                            <p style="color: var(--vshojo-light-gray); font-size: 0.9rem;" id="matchesColorText"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-grid" id="productGrid">
+                    <!-- here is where the products are generated -->
+                </div>
             </section>
         </main>
 
-        <footer class="footer" id="footer">
-
-            
-
-        </footer>
         <script src="assets/js/main.js"></script>
     </body>
 
