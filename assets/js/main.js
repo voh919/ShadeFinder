@@ -71,6 +71,7 @@ let currentImage = null;
 let currentColor = { r: 0, g: 0, b: 0, hex: '#000000', rgb: 'rgb(0, 0, 0)', hsl: 'hsl(0, 0%, 0%)' };
 let selectedColor = null;
 let hasDetectedColor = false;
+let isColorFrozen = false;
 
 imageInput.addEventListener('change', handleImageUpload);
 canvas.addEventListener('mousemove', handleMouseMove);
@@ -107,6 +108,8 @@ function handleImageUpload(event) {
             drawImageOnCanvas();
             pickerContainer.style.display = 'flex';
             instructions.style.display = 'none';
+            isColorFrozen = false;
+            unfreezeColorValues(); 
         };
         img.src = e.target.result;
     };
@@ -140,6 +143,8 @@ function drawImageOnCanvas() {
     hasDetectedColor = false;
     selectedColorDisplay.classList.remove('show');
     matchProductsBtn.classList.remove('show');
+    isColorFrozen = false;
+    unfreezeColorValues(); 
 
     canvas.style.cursor = 'crosshair';
     canvas.title = 'Click on any part of the image to select that color';
@@ -165,6 +170,7 @@ function handleCanvasClick(event) {
     hasDetectedColor = true;
     
     updateColorDisplay();
+    freezeColorValues();
     coordinates.textContent = `Position: (${x}, ${y}) - Color Selected`;
 
     selectCurrentColor();
@@ -192,7 +198,10 @@ function handleMouseMove(event) {
         hsl: rgbToHsl(r, g, b)
     };
     
-    updateColorDisplay();
+    updateColorPreview();
+    if (!isColorFrozen) {
+        updateColorValues();
+    }
     coordinates.textContent = `Position: (${x}, ${y})`;
     
     hasDetectedColor = true;
@@ -203,10 +212,38 @@ function handleMouseLeave() {
 }
 
 function updateColorDisplay() {
+    updateColorPreview();
+    updateColorValues();
+}
+
+function updateColorPreview() {
     colorPreview.style.backgroundColor = currentColor.hex;
+}
+
+function updateColorValues() {
     hexValue.textContent = currentColor.hex;
     rgbValue.textContent = currentColor.rgb;
     hslValue.textContent = currentColor.hsl;
+}
+
+function freezeColorValues() {
+    isColorFrozen = true;
+    [hexValue, rgbValue, hslValue].forEach(element => {
+        element.style.fontWeight = 'bold';
+        element.style.border = '2px solid var(--vshojo-pink, #fe2890)';
+        element.style.borderRadius = '4px';
+        element.style.padding = '2px 4px';
+    });
+}
+
+function unfreezeColorValues() {
+    isColorFrozen = false;
+    [hexValue, rgbValue, hslValue].forEach(element => {
+        element.style.fontWeight = '';
+        element.style.border = '';
+        element.style.borderRadius = '';
+        element.style.padding = '';
+    });
 }
 
 function selectCurrentColor() {
@@ -227,29 +264,46 @@ function selectCurrentColor() {
 }
 
 function addClickFeedback(x, y) {
-    const indicator = document.createElement('div');
-    indicator.style.position = 'absolute';
-    indicator.style.left = x + 'px';
-    indicator.style.top = y + 'px';
-    indicator.style.width = '20px';
-    indicator.style.height = '20px';
-    indicator.style.borderRadius = '50%';
-    indicator.style.border = '3px solid var(--vshojo-pink)';
-    indicator.style.backgroundColor = 'rgba(254, 40, 144, 0.2)';
-    indicator.style.transform = 'translate(-50%, -50%)';
-    indicator.style.pointerEvents = 'none';
-    indicator.style.zIndex = '1000';
-    indicator.style.animation = 'clickPulse 0.6s ease-out forwards';
-    
     const canvasContainer = document.querySelector('.canvas-container');
     canvasContainer.style.position = 'relative';
-    canvasContainer.appendChild(indicator);
-
+    
+    const outerRing = document.createElement('div');
+    outerRing.style.cssText = `
+        position: absolute;
+        left: ${x}px;
+        top: ${y}px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 2px solid hsla(341, 60.60%, 75.10%, 0.96);
+        background-color: hsla(340, 65.20%, 82.00%, 0.47);
+        transform: translate(-50%, -50%) scale(0);
+        pointer-events: none;
+        z-index: 1002;
+        box-shadow: 0 0 20px hsla(300, 24.60%, 88.00%, 0.67);
+    `;
+    
+    canvasContainer.appendChild(outerRing);
+    
+    requestAnimationFrame(() => {
+        outerRing.style.transition = 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+        outerRing.style.transform = 'translate(-50%, -50%) scale(1)';
+        outerRing.style.opacity = '1';
+        
+        setTimeout(() => {
+            outerRing.style.transition = 'all 0.5s ease-out';
+            outerRing.style.opacity = '0';
+            outerRing.style.transform = 'translate(-50%, -50%) scale(1.5)';
+        }, 400);
+    });
+    
     setTimeout(() => {
-        if (indicator.parentNode) {
-            indicator.parentNode.removeChild(indicator);
-        }
-    }, 600);
+        [outerRing].forEach(element => {
+            if (element.parentNode) {
+                element.parentNode.removeChild(element);
+            }
+        });
+    }, 1200);
 }
 
 function rgbToHex(r, g, b) {
@@ -287,7 +341,7 @@ function rgbToHsl(r, g, b) {
 
 const productDatabase = [
     
-    // Lipsticks
+    // Lipstick
     { brand: "Charlotte Tilbury", name: "Matte Revolution Lipstick", shade: "Pillow Talk", type: "Lipstick", hex: "#c8857d" },
     { brand: "Charlotte Tilbury", name: "Matte Revolution Lipstick", shade: "Red Carpet Red", type: "Lipstick", hex: "#dc143c" },
     { brand: "Charlotte Tilbury", name: "Matte Revolution Lipstick", shade: "Very Victoria", type: "Lipstick", hex: "#8b0000" },
@@ -352,7 +406,6 @@ function displayProductMatches() {
             `;
             productGrid.appendChild(noMatchesMessage);
         } else {
-            // Display matched products
             matches.forEach(match => {
                 const productCard = createProductCard(match);
                 productGrid.appendChild(productCard);

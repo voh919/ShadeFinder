@@ -22,14 +22,14 @@
     --font-h2: 2.25rem;
     --font-h3: 1.375rem;
 
-    /* Font Weights */
+    /* Font weights */
     --font-light: 300;
     --font-regular: 400;
     --font-medium: 500;
     --font-semibold: 600;
     --font-bold: 700;
 
-    /* Spacing & Layout */
+    /* Spacing/layout */
     --container-max: 1200px;
     --spacing-xs: 0.75rem;
     --spacing-sm: 1.25rem;
@@ -38,7 +38,7 @@
     --spacing-xl: 3.5rem;
     --spacing-2xl: 5rem;
 
-    /* Borders & Shadows */
+    /* Borders/shadows */
     --border-radius: 0.75rem;
     --border-radius-lg: 1.5rem;
     --border-radius-xl: 2rem;
@@ -239,9 +239,8 @@ img {
     border-color: var(--primary-soft);
 }
 
-/* Color info. side box */
 .color-info {
-    flex: 0 0 360px;
+    flex: 0 0 440px;
     background: var(--pure-white);
     padding: var(--spacing-xl);
     border-radius: var(--border-radius-xl);
@@ -250,6 +249,8 @@ img {
     top: var(--spacing-lg);
     backdrop-filter: blur(20px);
     border: 1px solid var(--soft-beige);
+    display: flex;
+    flex-direction: column;
 }
 
 .color-preview {
@@ -257,11 +258,12 @@ img {
     height: 100px;
     border: 3px solid var(--soft-beige);
     border-radius: var(--border-radius-lg);
-    margin-bottom: 2rem;
+    margin-bottom: var(--spacing-md); 
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     box-shadow: var(--shadow-soft);
+    order: 1;
 }
 
 .color-preview:hover {
@@ -289,9 +291,34 @@ img {
     filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
 }
 
+/* Selected color display moved to second position */
+.selected-color-display {
+    display: none;
+    background: var(--warm-white);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-lg);
+    margin-bottom: var(--spacing-md);
+    border: 1px solid var(--soft-beige);
+    order: 2;
+}
+
+.selected-color-display.show {
+    display: block;
+}
+
+.selected-color-preview {
+    width: 100%;
+    height: 60px;
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-xs);
+    box-shadow: var(--shadow-soft);
+}
+
+/* Color values section comes after */
 .color-values {
     display: grid;
     gap: var(--spacing-sm);
+    order: 3; 
 }
 
 .color-value {
@@ -357,6 +384,7 @@ img {
     box-shadow: var(--shadow-soft);
     font-size: 1.05rem;
     letter-spacing: 0.025em;
+    order: 4; /* Fourth item */
 }
 
 .choose-new-color-btn:hover {
@@ -396,6 +424,7 @@ img {
     opacity: 0.5;
     font-size: 1.05rem;
     letter-spacing: 0.025em;
+    order: 5; /* Fifth item */
 }
 
 .select-color-btn.active {
@@ -431,6 +460,7 @@ img {
     box-shadow: var(--shadow-soft);
     font-size: 1.05rem;
     letter-spacing: 0.025em;
+    order: 6; /* Sixth item */
 }
 
 .match-products-btn.show {
@@ -441,28 +471,6 @@ img {
     background: linear-gradient(135deg, var(--success), var(--success-light));
     transform: translateY(-2px);
     box-shadow: var(--shadow-floating);
-}
-
-/* Color display boxes */
-.selected-color-display {
-    display: none;
-    background: var(--warm-white);
-    padding: var(--spacing-md);
-    border-radius: var(--border-radius-lg);
-    margin-bottom: var(--spacing-md);
-    border: 1px solid var(--soft-beige);
-}
-
-.selected-color-display.show {
-    display: block;
-}
-
-.selected-color-preview {
-    width: 100%;
-    height: 60px;
-    border-radius: var(--border-radius);
-    margin-bottom: var(--spacing-xs);
-    box-shadow: var(--shadow-soft);
 }
 
 /* Coordinates/instructions */
@@ -476,6 +484,7 @@ img {
     padding: var(--spacing-sm);
     border-radius: var(--border-radius);
     border: 1px solid var(--soft-beige);
+    order: 7; /* Seventh item */
 }
 
 .instructions {
@@ -489,6 +498,7 @@ img {
     line-height: 1.6;
     border: 1px solid var(--soft-beige);
     box-shadow: var(--shadow-soft);
+    order: 8; /* Eighth item */
 }
 
 /* Matched products */
@@ -564,7 +574,9 @@ img {
     margin-bottom: var(--spacing-xs);
     color: var(--charcoal);
     font-size: 1.1rem;
-}@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 /* Product matching */
 .matches-header {
