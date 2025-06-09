@@ -409,10 +409,8 @@ class ColorPicker {
             return;
         }
         
-        // Check if product database is loaded
         if (!productDatabase || productDatabase.length === 0) {
             console.error('Product database not loaded yet');
-            // You could show a loading message or retry loading here
             return;
         }
         
