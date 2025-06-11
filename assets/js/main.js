@@ -96,6 +96,7 @@ class ColorPicker {
         this.currentImage = null;
         this.currentColor = { r: 0, g: 0, b: 0, hex: '#000000', rgb: 'rgb(0, 0, 0)', hsl: 'hsl(0, 0%, 0%)' };
         this.selectedColor = null;
+        this.currentMatches = [];
         this.hasDetectedColor = false;
         this.isColorFrozen = false;
         
@@ -139,6 +140,14 @@ class ColorPicker {
                 element.addEventListener('click', () => this.copyColorValue(element));
             }
         });
+
+        // Add product type filter event listener
+        const productTypeFilter = document.getElementById('productTypeFilter');
+        if (productTypeFilter) {
+            productTypeFilter.addEventListener('change', () => {
+                this.filterProductsByType(productTypeFilter.value);
+            });
+        }
     }
     
     async copyColorValue(element) {
@@ -185,6 +194,7 @@ class ColorPicker {
         this.isColorFrozen = false;
         this.hasDetectedColor = false;
         this.selectedColor = null;
+        this.currentMatches = [];
         this.unfreezeColorValues();
         
         if (this.selectedColorDisplay) {
@@ -403,6 +413,40 @@ class ColorPicker {
         }, 1200);
     }
     
+    filterProductsByType(selectedType) {
+        const productGrid = document.getElementById('productGrid');
+        if (!productGrid) return;
+
+        productGrid.innerHTML = '';
+
+        if (this.currentMatches.length === 0) {
+            this.displayNoMatches(productGrid);
+            return;
+        }
+
+        const filteredMatches = selectedType === 'all' 
+            ? this.currentMatches 
+            : this.currentMatches.filter(match => match.type === selectedType);
+
+        if (filteredMatches.length === 0) {
+            const noMatchesMessage = document.createElement('div');
+            noMatchesMessage.className = 'no-matches-message';
+            noMatchesMessage.innerHTML = `
+                <div style="font-size: 48px; margin-bottom: 16px;">🎨</div>
+                <h3 style="margin-bottom: 8px; color: #333;">No matches found</h3>
+                <p>No ${selectedType.toLowerCase()} products match your selected color.</p>
+                <p style="margin-top: 12px; font-size: 14px;">Try selecting a different color or product type.</p>
+            `;
+            productGrid.appendChild(noMatchesMessage);
+            return;
+        }
+
+        filteredMatches.forEach(match => {
+            const productCard = this.createProductCard(match);
+            productGrid.appendChild(productCard);
+        });
+    }
+    
     displayProductMatches() {
         if (!this.selectedColor) {
             console.log('No selected color available for matching');
@@ -430,16 +474,21 @@ class ColorPicker {
         const matches = this.findColorMatches(this.selectedColor);
         console.log(`Found ${matches.length} matches`);
         
+        // Store the current matches for filtering
+        this.currentMatches = matches;
+        
         if (productGrid) {
             productGrid.innerHTML = '';
             
             if (matches.length === 0) {
                 this.displayNoMatches(productGrid);
             } else {
-                matches.forEach(match => {
-                    const productCard = this.createProductCard(match);
-                    productGrid.appendChild(productCard);
-                });
+                // Get the current filter value
+                const productTypeFilter = document.getElementById('productTypeFilter');
+                const selectedType = productTypeFilter ? productTypeFilter.value : 'all';
+                
+                // Filter and display products
+                this.filterProductsByType(selectedType);
             }
         } else {
             console.error('Product grid element not found');
