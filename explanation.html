@@ -79,10 +79,10 @@
   <!-- Navbar copied exactly from home.html -->
   <nav class="navbar">
     <div class="nav-container">
-      <a href="index.html" class="nav-logo">
-        <i class="ri-palette-line"></i>
-        ShadeFinder
-      </a>
+      <a href="home.html" class="nav-logo">
+                <i class="ri-palette-line"></i>
+                ShadeFinder
+            </a>
 
       <ul class="nav-menu" id="nav-menu">
         <li class="nav-item">
@@ -92,7 +92,7 @@
           <a href="upload.html" class="nav-link">Color Picker</a>
         </li>
         <li class="nav-item">
-          <a href="how-it-works.html" class="nav-link active">How It Works</a>
+          <a href="explanation.html" class="nav-link active">How It Works</a>
         </li>
         <li class="nav-item">
           <a href="about.html" class="nav-link">About</a>
@@ -146,22 +146,22 @@
     const navToggle = document.getElementById('nav-toggle');
     const navMenu = document.getElementById('nav-menu');
 
-    navToggle.addEventListener('click', () => {
-      navMenu.classList.toggle('show');
-      const icon = navToggle.querySelector('i');
-      icon.classList.toggle('ri-menu-line');
-      icon.classList.toggle('ri-close-line');
-    });
+    // navToggle.addEventListener('click', () => {
+    //   navMenu.classList.toggle('show');
+    //   const icon = navToggle.querySelector('i');
+    //   icon.classList.toggle('ri-menu-line');
+    //   icon.classList.toggle('ri-close-line');
+    // });
 
     // Close mobile menu when clicking on a link
-    document.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', () => {
-        navMenu.classList.remove('show');
-        const icon = navToggle.querySelector('i');
-        icon.classList.add('ri-menu-line');
-        icon.classList.remove('ri-close-line');
-      });
-    });
+    // document.querySelectorAll('.nav-link').forEach(link => {
+    //   link.addEventListener('click', () => {
+    //     navMenu.classList.remove('show');
+    //     const icon = navToggle.querySelector('i');
+    //     icon.classList.add('ri-menu-line');
+    //     icon.classList.remove('ri-close-line');
+    //   });
+    // });
 
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {

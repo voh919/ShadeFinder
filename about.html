@@ -20,7 +20,7 @@
       padding-top: 70px; /* Account for fixed navbar */
       background: #faf7f3;
       color: #333;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
       margin-top: 8vh;
     }
     
@@ -57,10 +57,10 @@
   <!-- Navbar -->
   <nav class="navbar">
     <div class="nav-container">
-      <a href="index.html" class="nav-logo">
-        <i class="ri-palette-line"></i>
-        ShadeFinder
-      </a>
+      <a href="home.html" class="nav-logo">
+                <i class="ri-palette-line"></i>
+                ShadeFinder
+            </a>
 
       <ul class="nav-menu" id="nav-menu">
         <li class="nav-item">
@@ -70,7 +70,7 @@
           <a href="upload.html" class="nav-link">Color Picker</a>
         </li>
         <li class="nav-item">
-          <a href="how-it-works.html" class="nav-link">How It Works</a>
+          <a href="explanation.html" class="nav-link">How It Works</a>
         </li>
         <li class="nav-item">
           <a href="about.html" class="nav-link active">About</a>
@@ -101,12 +101,12 @@
     const navToggle = document.querySelector('.nav-toggle');
     const navMenu = document.querySelector('.nav-menu');
 
-    navToggle.addEventListener('click', () => {
-      navMenu.classList.toggle('show');
-      const icon = navToggle.querySelector('i');
-      icon.classList.toggle('ri-menu-line');
-      icon.classList.toggle('ri-close-line');
-    });
+    // navToggle.addEventListener('click', () => {
+    //   navMenu.classList.toggle('show');
+    //   const icon = navToggle.querySelector('i');
+    //   icon.classList.toggle('ri-menu-line');
+    //   icon.classList.toggle('ri-close-line');
+    // });
   </script>
 
   <!-- FontAwesome for icons -->

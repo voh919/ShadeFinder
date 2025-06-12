@@ -24,10 +24,10 @@
         <!--=============== NAVIGATION ===============-->
         <nav class="navbar">
             <div class="nav-container">
-                <a href="#" class="nav-logo">
-                    <i class="ri-palette-line"></i>
-                    ShadeFinder
-                </a>
+                <a href="home.html" class="nav-logo">
+                <i class="ri-palette-line"></i>
+                ShadeFinder
+            </a>
 
                 <ul class="nav-menu" id="nav-menu">
                     <li class="nav-item">
@@ -148,48 +148,48 @@
             const navToggle = document.getElementById('nav-toggle');
             const navMenu = document.getElementById('nav-menu');
 
-            navToggle.addEventListener('click', () => {
-                navMenu.classList.toggle('show');
-                const icon = navToggle.querySelector('i');
-                icon.classList.toggle('ri-menu-line');
-                icon.classList.toggle('ri-close-line');
-            });
+            // navToggle.addEventListener('click', () => {
+            //     navMenu.classList.toggle('show');
+            //     const icon = navToggle.querySelector('i');
+            //     icon.classList.toggle('ri-menu-line');
+            //     icon.classList.toggle('ri-close-line');
+            // 
 
             // Close mobile menu when clicking on a link
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', () => {
-                    navMenu.classList.remove('show');
-                    const icon = navToggle.querySelector('i');
-                    icon.classList.add('ri-menu-line');
-                    icon.classList.remove('ri-close-line');
-                });
-            });
+            // document.querySelectorAll('.nav-link').forEach(link => {
+            //     link.addEventListener('click', () => {
+            //         navMenu.classList.remove('show');
+            //         const icon = navToggle.querySelector('i');
+            //         icon.classList.add('ri-menu-line');
+            //         icon.classList.remove('ri-close-line');
+            //     });
+            // });
 
             // Active link highlighting
-            document.addEventListener('DOMContentLoaded', () => {
-                const sections = document.querySelectorAll('section[id]');
-                const navLinks = document.querySelectorAll('.nav-link');
+            // document.addEventListener('DOMContentLoaded', () => {
+            //     const sections = document.querySelectorAll('section[id]');
+            //     const navLinks = document.querySelectorAll('.nav-link');
 
-                function highlightNav() {
-                    let current = '';
-                    sections.forEach(section => {
-                        const sectionTop = section.offsetTop - 100;
-                        if (scrollY >= sectionTop) {
-                            current = section.getAttribute('id');
-                        }
-                    });
+            //     function highlightNav() {
+            //         let current = '';
+            //         sections.forEach(section => {
+            //             const sectionTop = section.offsetTop - 100;
+            //             if (scrollY >= sectionTop) {
+            //                 current = section.getAttribute('id');
+            //             }
+            //         });
 
-                    navLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href') === `#${current}`) {
-                            link.classList.add('active');
-                        }
-                    });
-                }
+            //         navLinks.forEach(link => {
+            //             link.classList.remove('active');
+            //             if (link.getAttribute('href') === `#${current}`) {
+            //                 link.classList.add('active');
+            //             }
+            //         });
+            //     }
 
-                window.addEventListener('scroll', highlightNav);
-                highlightNav(); // Initial call
-            });
+            //     window.addEventListener('scroll', highlightNav);
+            //     highlightNav(); // Initial call
+            // });
         </script>
     </body>
 

@@ -560,18 +560,18 @@ class ColorPicker {
             <div class="product-name">${product.name}</div>
             <div class="product-shade">${product.shade} • ${product.type}</div>
             <div class="product-match">${product.matchPercentage}% Match</div>
-            <button class="favorite-btn ${isFavorited ? 'favorited' : ''}" aria-label="Add to favorites">
-                <i class="ri-heart-${isFavorited ? 'fill' : 'line'}"></i>
-            </button>
         `;
+        // <button class="favorite-btn ${isFavorited ? 'favorited' : ''}" aria-label="Add to favorites">
+            //     <i class="ri-heart-${isFavorited ? 'fill' : 'line'}"></i>
+            // </button>
         
-        const favoriteBtn = card.querySelector('.favorite-btn');
-        favoriteBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            this.toggleFavorite(product, favoriteBtn);
-            const heartIcon = favoriteBtn.querySelector('i');
-            heartIcon.className = `ri-heart-${this.isProductFavorited(product) ? 'fill' : 'line'}`;
-        });
+        // const favoriteBtn = card.querySelector('.favorite-btn');
+        // favoriteBtn.addEventListener('click', (e) => {
+        //     e.preventDefault();
+        //     this.toggleFavorite(product, favoriteBtn);
+        //     const heartIcon = favoriteBtn.querySelector('i');
+        //     heartIcon.className = `ri-heart-${this.isProductFavorited(product) ? 'fill' : 'line'}`;
+        // });
         
         return card;
     }
