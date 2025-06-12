@@ -187,8 +187,9 @@ body::before {
 }
 
 .upload-area h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: var(--font-semibold);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
     color: var(--charcoal);
     background: linear-gradient(135deg, var(--charcoal), var(--primary));
     -webkit-background-clip: text;

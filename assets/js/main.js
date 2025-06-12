@@ -264,33 +264,40 @@ class ColorPicker {
     }
     
     handleMouseMove(event) {
-        if (!this.currentImage || !this.canvas || this.isColorFrozen) return;
-        
-        const rect = this.canvas.getBoundingClientRect();
-        const x = Math.floor((event.clientX - rect.left) * (this.canvas.width / rect.width));
-        const y = Math.floor((event.clientY - rect.top) * (this.canvas.height / rect.height));
-        
-        if (x < 0 || y < 0 || x >= this.canvas.width || y >= this.canvas.height) return;
-        
-        const imageData = this.ctx.getImageData(x, y, 1, 1);
-        const [r, g, b] = imageData.data;
-        
-        this.currentColor = {
-            r, g, b,
-            hex: this.rgbToHex(r, g, b),
-            rgb: `rgb(${r}, ${g}, ${b})`,
-            hsl: this.rgbToHsl(r, g, b)
-        };
-        
-        this.updateColorPreview();
+    if (!this.currentImage || !this.canvas) return;
+    
+    const rect = this.canvas.getBoundingClientRect();
+    const x = Math.floor((event.clientX - rect.left) * (this.canvas.width / rect.width));
+    const y = Math.floor((event.clientY - rect.top) * (this.canvas.height / rect.height));
+    
+    if (x < 0 || y < 0 || x >= this.canvas.width || y >= this.canvas.height) return;
+    
+    const imageData = this.ctx.getImageData(x, y, 1, 1);
+    const [r, g, b] = imageData.data;
+    
+    // Always update the current color being hovered over
+    this.currentColor = {
+        r, g, b,
+        hex: this.rgbToHex(r, g, b),
+        rgb: `rgb(${r}, ${g}, ${b})`,
+        hsl: this.rgbToHsl(r, g, b)
+    };
+    
+    // Always update the color preview box
+    this.updateColorPreview();
+    
+    // Only update the color values if they're not frozen
+    if (!this.isColorFrozen) {
         this.updateColorValues();
-        
-        if (this.coordinates) {
-            this.coordinates.textContent = `Position: (${x}, ${y})`;
-        }
-        
-        this.hasDetectedColor = true;
     }
+    
+    // Always update coordinates
+    if (this.coordinates) {
+        this.coordinates.textContent = `Position: (${x}, ${y})`;
+    }
+    
+    this.hasDetectedColor = true;
+}
     
     handleMouseLeave() {
         if (this.coordinates) {
