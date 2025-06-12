@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <!--=============== META PRESETS ===============-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+
+        <!--=============== FAVICON ===============-->
+        <link rel="shortcut icon" href="assets/img/favicon/favicon.webp">
+
+        <!--=============== REMIXICONS ===============-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.4.0/fonts/remixicon.css">
+
+        <!--=============== CSS ===============-->
+        <link rel="stylesheet" href="assets/css/base.css">
+        <link rel="stylesheet" href="assets/css/upload.css">
+
+        <!--=============== PAGE TITLE ===============-->
+        <title> Shade Finder </title>
+    </head>
+
+    <body>
+        <!--=============== NAVIGATION ===============-->
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="#" class="nav-logo">
+                    <i class="ri-palette-line"></i>
+                    ShadeFinder
+                </a>
+
+                <ul class="nav-menu" id="nav-menu">
+                    <li class="nav-item">
+                        <a href="home.html" class="nav-link active">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="upload.html" class="nav-link">Color Picker</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="explanation.html" class="nav-link">How It Works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="about.html" class="nav-link">About</a>
+                    </li>
+                </ul>
+
+                <button class="nav-toggle" id="nav-toggle">
+                    <i class="ri-menu-line"></i>
+                </button>
+            </div>
+        </nav>
+
+        <main class="main">
+        <section class="container wrapper picker-section" id="picker">
+            <div class="upload-area">
+                <h1>Shade Finder</h1>
+                <p style="margin: 1rem 0; color: var(--taupe);">Upload an image and hover over it to extract colors</p>
+                <input type="file" id="imageInput" class="file-input" accept="image/*">
+                <label for="imageInput" class="upload-button">
+                    <i class="ri-upload-cloud-line" style="margin-right: 0.5rem;"></i>
+                    Choose Image
+                </label>
+            </div>
+
+            <div class="picker-container" id="pickerContainer" style="display: none;">
+                <div class="canvas-container">
+                    <canvas id="imageCanvas"></canvas>
+                </div>
+                
+                <div class="color-info">
+                    <div class="selected-color-display" id="selectedColorDisplay">
+                        <h3 style="margin-bottom: 1rem; color: var(--charcoal);">Selected Color</h3>
+                        <div class="selected-color-preview" id="selectedColorPreview"></div>
+                        <p style="font-size: 0.9rem; color: var(--taupe); text-align: center;" id="selectedColorText"></p>
+                    </div>
+
+                    <div class="color-preview" id="colorPreview" title="Click to select this color"></div>
+
+                    <div class="color-values">
+                        <div class="color-value">
+                            <span class="color-label">HEX</span>
+                            <span class="color-code" id="hexValue" title="Click to copy">#000000</span>
+                        </div>
+                        <div class="color-value">
+                            <span class="color-label">RGB</span>
+                            <span class="color-code" id="rgbValue" title="Click to copy">rgb(0, 0, 0)</span>
+                        </div>
+                        <div class="color-value">
+                            <span class="color-label">HSL</span>
+                            <span class="color-code" id="hslValue" title="Click to copy">hsl(0, 0%, 0%)</span>
+                        </div>
+                    </div>
+                    
+                    <button class="match-products-btn" id="matchProductsBtn">
+                        <span>Find Product Matches</span>
+                        <i class="ri-arrow-right-line"></i>
+                    </button>
+                    
+                    <div class="coordinates" id="coordinates">
+                        Position: (0, 0)
+                    </div>
+                </div>
+            </div>
+
+            <div class="instructions" id="instructions">
+                <p><i class="ri-information-line" style="margin-right: 0.5rem;"></i>
+                Upload an image to start. Click on any part of the image to select that color and find matching products.</p>
+            </div>
+        </section>
+
+        <section class="container wrapper matches-section" id="matches">
+            <div class="matches-header">
+                <a href="#picker" class="back-to-picker">
+                    <i class="ri-arrow-left-line"></i>
+                    Back to Color Picker
+                </a>
+                <h1>Product Matches</h1>
+                <div class="selected-color-info" id="matchesColorInfo">
+                    <div class="selected-color-circle" id="matchesColorCircle"></div>
+                    <div>
+                        <p style="font-weight: var(--font-semibold); color: var(--charcoal);">Selected Color</p>
+                        <p style="color: var(--taupe); font-size: 0.9rem;" id="matchesColorText"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-container">
+                <label for="productTypeFilter" class="filter-label">Filter by Product Type:</label>
+                <select id="productTypeFilter" class="product-type-filter">
+                    <option value="all">All Products</option>
+                    <option value="Lipstick">Lipstick</option>
+                    <option value="Blush">Blush</option>
+                    <option value="Contour">Contour</option>
+                    <option value="Concealer">Concealer</option>
+                    <option value="Foundation">Foundation</option>
+                </select>
+            </div>
+
+            <div class="product-grid" id="productGrid">
+                <!-- Products will be generated here -->
+            </div>
+        </section>
+        </main>
+
+        <script src="assets/js/main.js"></script>
+        <script>
+            // Navigation toggle functionality
+            const navToggle = document.getElementById('nav-toggle');
+            const navMenu = document.getElementById('nav-menu');
+
+            navToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('show');
+                const icon = navToggle.querySelector('i');
+                icon.classList.toggle('ri-menu-line');
+                icon.classList.toggle('ri-close-line');
+            });
+
+            // Close mobile menu when clicking on a link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('show');
+                    const icon = navToggle.querySelector('i');
+                    icon.classList.add('ri-menu-line');
+                    icon.classList.remove('ri-close-line');
+                });
+            });
+
+            // Active link highlighting
+            document.addEventListener('DOMContentLoaded', () => {
+                const sections = document.querySelectorAll('section[id]');
+                const navLinks = document.querySelectorAll('.nav-link');
+
+                function highlightNav() {
+                    let current = '';
+                    sections.forEach(section => {
+                        const sectionTop = section.offsetTop - 100;
+                        if (scrollY >= sectionTop) {
+                            current = section.getAttribute('id');
+                        }
+                    });
+
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${current}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+
+                window.addEventListener('scroll', highlightNav);
+                highlightNav(); // Initial call
+            });
+        </script>
+    </body>
+
+</html>

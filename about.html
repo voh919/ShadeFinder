@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About Us - ShadeFinder</title>
+  
+  <!-- Link to your existing CSS -->
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/upload.css" />
+  
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter&display=swap"
+    rel="stylesheet"
+  />
+  
+  <style>
+    body {
+      padding-top: 70px; /* Account for fixed navbar */
+      background: #faf7f3;
+      color: #333;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: var(--border-radius-xl);
+      box-shadow: var(--shadow-floating);
+      backdrop-filter: blur(20px);
+    }
+    
+    h1 {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--charcoal), var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      color: var(--taupe);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <i class="ri-palette-line"></i>
+        ShadeFinder
+      </a>
+
+      <ul class="nav-menu" id="nav-menu">
+        <li class="nav-item">
+          <a href="home.html" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="upload.html" class="nav-link">Color Picker</a>
+        </li>
+        <li class="nav-item">
+          <a href="how-it-works.html" class="nav-link">How It Works</a>
+        </li>
+        <li class="nav-item">
+          <a href="about.html" class="nav-link active">About</a>
+        </li>
+      </ul>
+
+      <button class="nav-toggle" id="nav-toggle">
+        <i class="ri-menu-line"></i>
+      </button>
+    </div>
+  </nav>
+
+  <main class="container">
+    <h1>About Us</h1>
+    <p>
+      We're Vivian, Sarah, and Mia, and we're always on the hunt for the greatest beauty products.
+    </p>
+    <p>
+      There's a popular TikTok trend where people post pictures of everyday objects and ask for product recommendations that match the shade. We thought, why not digitize this idea and make sure everyone can find their perfect product easily and instantly?
+    </p>
+    <p>
+      With ShadeFinder, you can upload any image, and our system will help you discover the best beauty products that match the colors you love.
+    </p>
+  </main>
+
+  <script>
+    // Mobile nav toggle script
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+
+    navToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('show');
+      const icon = navToggle.querySelector('i');
+      icon.classList.toggle('ri-menu-line');
+      icon.classList.toggle('ri-close-line');
+    });
+  </script>
+
+  <!-- FontAwesome for icons -->
+  <script
+    src="https://kit.fontawesome.com/a076d05399.js"
+    crossorigin="anonymous"
+  ></script>
+</body>
+</html>
