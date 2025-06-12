@@ -82,12 +82,15 @@ body {
 }
 
 h1 {
-    font-size: var(--font-h1);
-    font-weight: var(--font-light);
-    color: var(--charcoal);
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-}
+        font-size: 2rem;
+        font-weight: var(--font-semibold);
+        color: var(--charcoal);
+        background: linear-gradient(135deg, var(--charcoal), var(--primary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: var(--spacing-md);
+    }
 
 h2 {
     font-size: var(--font-h2);
