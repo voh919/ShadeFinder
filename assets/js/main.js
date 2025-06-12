@@ -97,6 +97,7 @@ class ColorPicker {
         this.currentColor = { r: 0, g: 0, b: 0, hex: '#000000', rgb: 'rgb(0, 0, 0)', hsl: 'hsl(0, 0%, 0%)' };
         this.selectedColor = null;
         this.currentMatches = [];
+        this.favorites = this.loadFavorites();
         this.hasDetectedColor = false;
         this.isColorFrozen = false;
         
@@ -551,13 +552,26 @@ class ColorPicker {
         const card = document.createElement('div');
         card.className = 'product-card';
         
+        const isFavorited = this.isProductFavorited(product);
+        
         card.innerHTML = `
             <div class="product-color" style="background-color: ${product.hex}"></div>
             <div class="product-brand">${product.brand}</div>
             <div class="product-name">${product.name}</div>
             <div class="product-shade">${product.shade} • ${product.type}</div>
             <div class="product-match">${product.matchPercentage}% Match</div>
+            <button class="favorite-btn ${isFavorited ? 'favorited' : ''}" aria-label="Add to favorites">
+                <i class="ri-heart-${isFavorited ? 'fill' : 'line'}"></i>
+            </button>
         `;
+        
+        const favoriteBtn = card.querySelector('.favorite-btn');
+        favoriteBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.toggleFavorite(product, favoriteBtn);
+            const heartIcon = favoriteBtn.querySelector('i');
+            heartIcon.className = `ri-heart-${this.isProductFavorited(product) ? 'fill' : 'line'}`;
+        });
         
         return card;
     }
@@ -602,6 +616,41 @@ class ColorPicker {
             g: parseInt(result[2], 16),
             b: parseInt(result[3], 16)
         } : null;
+    }
+
+    loadFavorites() {
+        const savedFavorites = localStorage.getItem('shadeFinderFavorites');
+        return savedFavorites ? JSON.parse(savedFavorites) : [];
+    }
+
+    saveFavorites() {
+        localStorage.setItem('shadeFinderFavorites', JSON.stringify(this.favorites));
+    }
+
+    isProductFavorited(product) {
+        return this.favorites.some(fav => 
+            fav.brand === product.brand && 
+            fav.name === product.name && 
+            fav.shade === product.shade
+        );
+    }
+
+    toggleFavorite(product, heartIcon) {
+        const isFavorited = this.isProductFavorited(product);
+        
+        if (isFavorited) {
+            this.favorites = this.favorites.filter(fav => 
+                !(fav.brand === product.brand && 
+                  fav.name === product.name && 
+                  fav.shade === product.shade)
+            );
+            heartIcon.classList.remove('favorited');
+        } else {
+            this.favorites.push(product);
+            heartIcon.classList.add('favorited');
+        }
+        
+        this.saveFavorites();
     }
 }
 

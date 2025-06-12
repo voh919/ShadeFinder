@@ -512,6 +512,48 @@ img {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid var(--soft-beige);
     backdrop-filter: blur(10px);
+    position: relative;
+}
+
+.favorite-btn {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    background: none;
+    border: none;
+    padding: var(--spacing-xs);
+    cursor: pointer;
+    color: var(--taupe);
+    transition: all 0.2s ease;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+}
+
+.favorite-btn:hover {
+    background-color: var(--warm-white);
+    transform: scale(1.1);
+}
+
+.favorite-btn i {
+    font-size: 1.25rem;
+    transition: all 0.2s ease;
+}
+
+.favorite-btn.favorited {
+    color: var(--primary);
+}
+
+.favorite-btn.favorited i {
+    transform: scale(1.1);
+}
+
+.favorite-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--primary-soft);
 }
 
 .product-card:hover {
